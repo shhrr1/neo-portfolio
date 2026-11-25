@@ -22,7 +22,7 @@ export const ABOUT_ME = {
 };
 
 export const USER_NAMES = {
-  githubUsername: "github.com/shhrr1",
+  githubUsername: "shhrr1",
   peerlistUsername: "your-peerlist",
   instagramUsername: "your-instagram",
   // cal.com username + event slug used by the "schedule a meeting" button
@@ -92,30 +92,28 @@ export const EXPERIENCE = [
     company: "Company One",
     companyLink: "https://example.com/",
     logo: "/livo.svg",
-    role: "Software Developer",
-    period: "Jan 2024 - Present",
+    role: "Frontend Developer",
+    period: "Jan 2023 ",
     location: "City, Country",
-    description:
-      "Describe what you did here — the products you shipped, the impact you had, and the technologies you worked with. Keep it to two or three sentences focused on outcomes.",
-    skills: ["Next.js", "React", "Node.js", "TypeScript", "PostgreSQL"],
+    skills: ["React", "TypeScript", "MockApi", "REST APIs"],
   },
   {
     company: "Company Two",
     companyLink: "https://humo.tj/en",
     logo: "/humo_logo.png",
     role: "Frontend Developer",
-    period: "Фев 2024 - Dec 2026",
+    period: "Feb 2024 - Dec 2026",
     location: "City, Country",
     description:
       "Another role summary. Highlight a concrete achievement or two and the stack you used to deliver it.",
-    skills: ["React", "TypeScript", "Antd", "REST APIs"],
+    skills: ["React", "TypeScript", "Antd", "REST APIs", "Next.js", "Node.js", 'Tailwind CSS', 'Redux'],
   },
 ];
 
 export const EDUCATION = [
   {
-    degree: "B.Tech in Computer Science Engineering",
-    institution: "Your University",
+    degree: "Applied Informatics in Economics",
+    institution: "Russian‑Tajik Slavic University",
     institutionLink: "https://example.com/",
     period: "2021 - 2025",
     score: "8.5 CGPA",
