@@ -8,23 +8,21 @@ const DOMAIN = "yourdomain.com";
 export const BASE_URL = `https://${DOMAIN}`;
 
 export const ABOUT_ME = {
-  name: "Your Name",
-  title: "Full Stack Developer",
-  location: "City, India",
+  name: "Shahriyor Asadov",
+  title: "Frontend Developer",
+  location: "Tajikistan, Dushanbe",
   email: "you@example.com",
   description: [
-    "Hey, there! I'm a developer who loves building products that people actually use. Write a couple of sentences here about who you are, what you do, and what you're currently working on.",
-    "Use this space to talk about your experience, the kinds of problems you enjoy solving, and the technologies you reach for most often.",
-    "Wrap up with what you're excited about right now — side projects, open source, or whatever you're learning next.",
+   "Привет! 👋 Я [Твое Имя] — фронтенд-разработчик, который создает продукты, которыми люди действительно пользуются. Пишу чистый код, слежу за производительностью и стараюсь делать интерфейсы не только красивыми, но и удобными.",
+"Здесь можешь рассказать о своем опыте: какие задачи тебе нравится решать и какие технологии используешь чаще всего. Например, я предпочитаю React, TypeScript и Next.js для создания быстрых и масштабируемых веб-приложений.",
+"В завершение расскажи, чем горишь прямо сейчас — пет-проектами, open source или тем, что изучаешь. Мне, например, интересно углубляться в архитектуру приложений и исследовать новые инструменты, которые делают жизнь разработчика проще."
   ],
-  profileImage: "/placeholder-avatar.png",
-  profileGif: "/placeholder-avatar.png",
+  profileImage: "/avatar.png",
+  profileGif: "/avatar.gif",
 };
 
 export const USER_NAMES = {
-  githubUsername: "your-github",
-  linkedinUsername: "your-linkedin",
-  twitterUsername: "your-twitter",
+  githubUsername: "github.com/shhrr1",
   peerlistUsername: "your-peerlist",
   instagramUsername: "your-instagram",
   // cal.com username + event slug used by the "schedule a meeting" button
@@ -33,9 +31,6 @@ export const USER_NAMES = {
 
 export const SOCIAL_LINKS = {
   github: `https://github.com/${USER_NAMES.githubUsername}`,
-  linkedin: `https://linkedin.com/in/${USER_NAMES.linkedinUsername}`,
-  peerlist: `https://peerlist.io/${USER_NAMES.peerlistUsername}`,
-  twitter: `https://x.com/${USER_NAMES.twitterUsername}`,
   instagram: `https://instagram.com/${USER_NAMES.instagramUsername}`,
   resume: "/resume.pdf",
   email: `mailto:${ABOUT_ME.email}?subject=Message%20from%20Website&body=Hi!%20I%27m...`,
@@ -96,7 +91,7 @@ export const EXPERIENCE = [
   {
     company: "Company One",
     companyLink: "https://example.com/",
-    logo: "/placeholder-logo.png",
+    logo: "/livo.svg",
     role: "Software Developer",
     period: "Jan 2024 - Present",
     location: "City, Country",
@@ -106,14 +101,14 @@ export const EXPERIENCE = [
   },
   {
     company: "Company Two",
-    companyLink: "https://example.com/",
-    logo: "/placeholder-logo.png",
-    role: "Frontend Developer Intern",
-    period: "Jun 2023 - Dec 2023",
-    location: "Remote",
+    companyLink: "https://humo.tj/en",
+    logo: "/humo_logo.png",
+    role: "Frontend Developer",
+    period: "Фев 2024 - Dec 2026",
+    location: "City, Country",
     description:
       "Another role summary. Highlight a concrete achievement or two and the stack you used to deliver it.",
-    skills: ["React", "TypeScript", "Tailwind CSS", "REST APIs"],
+    skills: ["React", "TypeScript", "Antd", "REST APIs"],
   },
 ];
 

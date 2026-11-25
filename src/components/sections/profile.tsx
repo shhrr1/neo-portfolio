@@ -13,22 +13,22 @@ import { ABOUT_ME } from "@/app/constants/data";
 const useISTTime = () => {
   const [currentTime, setCurrentTime] = useState("");
 
-  useEffect(() => {
-    const updateTime = () => {
-      const timeString = new Date().toLocaleTimeString("en-IN", {
-        timeZone: "Asia/Kolkata",
-        hour12: false,
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      });
-      setCurrentTime(timeString);
-    };
+useEffect(() => {
+  const updateTime = () => {
+    const timeString = new Date().toLocaleTimeString("ru-RU", {
+      timeZone: "Asia/Dushanbe",
+      hour12: false,
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+    setCurrentTime(timeString);
+  };
 
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
+  updateTime();
+  const interval = setInterval(updateTime, 1000);
+  return () => clearInterval(interval);
+}, []);
 
   return currentTime;
 };
@@ -107,7 +107,7 @@ const Profile = () => {
             <FaLocationCrosshairs className="w-4 h-4" />
             <span className="font-mono">{ABOUT_ME.location}</span>
           </div>
-          <div className="font-mono">{currentTime} IST</div>
+          <div className="font-mono">{currentTime} TJK</div>
         </div>
       </div>
     </section>
