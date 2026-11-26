@@ -12,92 +12,113 @@ export const PROJECTS = [
   // =============================================
   // Project One
   // =============================================
-  {
-    name: "Project One",
-    tagline: "A one-line description of what this project does.",
-    overview:
-      "Write the story behind this project — what problem it solves, why you built it, and what makes it interesting. This shows up when the project is expanded on the home page.",
-    description:
-      "A longer, more detailed description of the project. Cover the core idea, the main features, and the value it delivers to users. This text is used on the dedicated project page and in its metadata.",
-    tech: [
-      "Next.js",
-      "TypeScript",
-      "Tailwind CSS",
-      "PostgreSQL",
-      "Prisma",
-      "shadcn/ui",
-    ],
-    link: "https://example.com",
-    github: "https://github.com/your-github/project-one",
-    images: {
-      hero: "/placeholder-image.png",
-      gallery: [
-        {
-          src: "/placeholder-image.png",
-          alt: "Project One screenshot one",
-          caption: "Describe what this screenshot shows.",
-        },
-        {
-          src: "/placeholder-image.png",
-          alt: "Project One screenshot two",
-          caption: "Another short caption for context.",
-        },
-        {
-          src: "/placeholder-image.png",
-          alt: "Project One screenshot three",
-          caption: "Captions are optional — remove them if you like.",
-        },
-        {
-          src: "/placeholder-image.png",
-          alt: "Project One screenshot four",
-          caption: "Add as many gallery images as you need.",
-        },
-      ],
-    },
-    features: [
-      "List a key feature of your project here",
-      "Each item becomes a bullet on the project page",
-      "Keep them short and benefit-focused",
-      "Add or remove as many as you need",
-      "Authentication and authorization",
-      "Responsive, accessible UI",
-    ],
-    technicalDetails: [
+ {
+  name: "My Finances",
+  tagline: "A personal finance dashboard for managing money, goals, and tasks.",
+  overview:
+    "My Finances helps you track income and expenses, monitor account balances, analyze spending, and stay on top of personal goals and tasks. It supports multiple users and works as a PWA, so it can be installed on a phone and used offline.",
+  description:
+    "My Finances is a web app for personal finance tracking and planning. Users can manage accounts, record income and expenses, transfer money between their own accounts, explore analytics by category and time period, track habits and long-term goals, and manage a task list. The app also includes sign-up and sign-in, profile and theme settings, data export, and PWA support.",
+  tech: [
+    "Next.js 16",
+    "React 19",
+    "TypeScript",
+    "Tailwind CSS 4",
+    "Prisma",
+    "PostgreSQL",
+    "Neon",
+    "Better Auth",
+    "Recharts",
+    "PWA",
+  ],
+  link: "https://first-nextt-pr.vercel.app",
+  github: "https://github.com/shhrr1/firstNexttPr",
+  images: {
+    // hero: "/docs/screenshots/dashboard.png",
+    hero: "/first-project-preview.png",
+    gallery: [
       {
-        title: "Architecture Highlight",
-        description:
-          "Explain an interesting technical decision — how you structured the app, a tricky integration, or a performance optimization you're proud of.",
+        src: "/first-pr/first-project-preview.png",
+        alt: "My Finances main dashboard",
+        caption: "An overview of finances and personal tasks.",
       },
       {
-        title: "Data Layer",
-        description:
-          "Describe how you handle data: the database, the ORM, caching strategy, and how you keep things fast and consistent.",
+        src: "/first-pr/first-pr-finance.png",
+        alt: "Finance section",
+        caption: "Accounts, balances, and a list of transactions.",
       },
       {
-        title: "Another Detail",
-        description:
-          "Add as many technical detail blocks as you want. Each one renders as a titled paragraph on the project page.",
+        src: "/first-pr/first-pr-analytics.png",
+        alt: "Financial analytics",
+        caption: "Spending charts and financial trends.",
+      },
+      {
+        src: "/first-pr/first-pr-goals.png",
+        alt: "Goals section",
+        caption: "Habits and long-term goals.",
+      },
+      {
+        src: "/first-pr/first-pr-tasks.png",
+        alt: "Task list",
+        caption: "Tasks with priorities and deadlines.",
+      },
+      {
+        src: "/first-pr/first-pr-settings.png",
+        alt: "Application settings",
+        caption: "Profile and application settings.",
       },
     ],
-    challenges: [
-      {
-        problem: "Describe a challenge you ran into while building this.",
-        solution:
-          "Explain how you solved it — the approach you took and why it worked.",
-      },
-      {
-        problem: "Another problem worth highlighting.",
-        solution:
-          "The solution you landed on. These pairs show off your problem-solving.",
-      },
-    ],
-    metrics: {
-      users: "1,000+",
-      uptime: "99.9%",
-      loadTime: "< 1s",
-      stars: "120+",
-    },
   },
+  features: [
+    "Track income and expenses by category",
+    "Manage multiple accounts with automatically updated balances",
+    "Transfer funds between accounts",
+    "Analyze spending by category and time period",
+    "Track daily habits and long-term goals",
+    "Manage tasks with priorities and deadlines",
+    "Export data to CSV and JSON",
+    "Sign up and maintain a separate profile for each user",
+    "Install on a phone and use offline with PWA support",
+    "Light, dark, and system themes",
+  ],
+  technicalDetails: [
+    {
+      title: "Application Architecture",
+      description:
+        "The app is built with Next.js App Router, with the interface, server logic, and API in one project. Protected areas are separated from public pages.",
+    },
+    {
+      title: "Data and Financial Operations",
+      description:
+        "Prisma works with PostgreSQL. Account, transaction, and other feature data are associated with each user. A transfer creates a transaction and updates both account balances in a single database operation.",
+    },
+    {
+      title: "Authentication and PWA",
+      description:
+        "Better Auth handles sign-up and sign-in. PWA features let users install the app on their devices and use it offline.",
+    },
+  ],
+  challenges: [
+    {
+      problem:
+        "Financial data must be kept separate for each user.",
+      solution:
+        "User data queries are scoped to the user ID from the authenticated session.",
+    },
+    {
+      problem:
+        "A money transfer must update both accounts consistently.",
+      solution:
+        "The transfer record and both balance updates are handled within a Prisma transaction.",
+    },
+  ],
+  metrics: {
+    users: "Not specified",
+    uptime: "Not specified",
+    loadTime: "Not specified",
+    stars: "Not specified",
+  },
+},
 
   // =============================================
   // Project Two
@@ -158,36 +179,36 @@ export const PROJECTS = [
   // =============================================
   // Project Three
   // =============================================
-  {
-    name: "Project Three",
-    tagline: "A smaller side project or experiment.",
-    overview:
-      "Even small projects belong here. Briefly explain what you made and what you learned from it.",
-    description:
-      "A concise description of Project Three. Not every project needs metrics or a video — include only the sections that make sense.",
-    tech: ["Node.js", "Express", "MongoDB"],
-    link: "https://example.com",
-    github: "https://github.com/your-github/project-three",
-    images: {
-      hero: "/placeholder-image.png",
-      gallery: [
-        {
-          src: "/placeholder-image.png",
-          alt: "Project Three screenshot",
-          caption: "A look at the project in action.",
-        },
-      ],
-    },
-    features: [
-      "Keep the feature list focused",
-      "Highlight what makes it unique",
-      "Quality over quantity",
-    ],
-    challenges: [
-      {
-        problem: "What was tricky about this one?",
-        solution: "How you figured it out.",
-      },
-    ],
-  },
+  // {
+  //   name: "Project Three",
+  //   tagline: "A smaller side project or experiment.",
+  //   overview:
+  //     "Even small projects belong here. Briefly explain what you made and what you learned from it.",
+  //   description:
+  //     "A concise description of Project Three. Not every project needs metrics or a video — include only the sections that make sense.",
+  //   tech: ["Node.js", "Express", "MongoDB"],
+  //   link: "https://example.com",
+  //   github: "https://github.com/your-github/project-three",
+  //   images: {
+  //     hero: "/placeholder-image.png",
+  //     gallery: [
+  //       {
+  //         src: "/placeholder-image.png",
+  //         alt: "Project Three screenshot",
+  //         caption: "A look at the project in action.",
+  //       },
+  //     ],
+  //   },
+  //   features: [
+  //     "Keep the feature list focused",
+  //     "Highlight what makes it unique",
+  //     "Quality over quantity",
+  //   ],
+  //   challenges: [
+  //     {
+  //       problem: "What was tricky about this one?",
+  //       solution: "How you figured it out.",
+  //     },
+  //   ],
+  // },
 ];

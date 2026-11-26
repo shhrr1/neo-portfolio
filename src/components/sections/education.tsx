@@ -28,7 +28,6 @@ export default function Education() {
                 <ArrowUpRight className="inline-block w-4 h-4 ml-1" />
               </Link>
             </p>
-            <p className="text-sm text-muted-foreground">Score: {edu.score}</p>
           </div>
         ))}
       </div>

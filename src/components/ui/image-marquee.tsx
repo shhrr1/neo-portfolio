@@ -4,13 +4,13 @@ import Image from "next/image";
 
 // Swap these for your own project hero images (e.g. /projects/<name>/hero.webp).
 const IMAGES = [
-  { src: "/placeholder-image.png", alt: "Project One" },
+  { src: "/project-one.png", alt: "Project One" },
   { src: "/placeholder-image.png", alt: "Project Two" },
   { src: "/placeholder-image.png", alt: "Project Three" },
   { src: "/placeholder-image.png", alt: "Project Four" },
   { src: "/placeholder-image.png", alt: "Project Five" },
+  { src: "/project-one-analytic.png", alt: "project-one-analytic" },
   { src: "/placeholder-image.png", alt: "Project Six" },
-  { src: "/placeholder-image.png", alt: "Project Seven" },
 ];
 
 export default function ImageMarquee() {

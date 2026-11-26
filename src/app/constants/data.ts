@@ -13,9 +13,9 @@ export const ABOUT_ME = {
   location: "Tajikistan, Dushanbe",
   email: "you@example.com",
   description: [
-   "Привет! 👋 Я [Твое Имя] — фронтенд-разработчик, который создает продукты, которыми люди действительно пользуются. Пишу чистый код, слежу за производительностью и стараюсь делать интерфейсы не только красивыми, но и удобными.",
-"Здесь можешь рассказать о своем опыте: какие задачи тебе нравится решать и какие технологии используешь чаще всего. Например, я предпочитаю React, TypeScript и Next.js для создания быстрых и масштабируемых веб-приложений.",
-"В завершение расскажи, чем горишь прямо сейчас — пет-проектами, open source или тем, что изучаешь. Мне, например, интересно углубляться в архитектуру приложений и исследовать новые инструменты, которые делают жизнь разработчика проще."
+    "Hi! 👋 I’m [Your Name] — a frontend developer who builds products people actually use. I write clean code, care about performance, and aim to make interfaces not only beautiful but also easy to use.",
+    "Share your experience here: the kinds of problems you enjoy solving and the technologies you use most. For example, I prefer React, TypeScript, and Next.js for building fast, scalable web applications.",
+    "Finally, talk about what you’re passionate about right now — side projects, open source, or what you’re learning. I’m interested in exploring application architecture and new tools that make developers’ lives easier.",
   ],
   profileImage: "/avatar.png",
   profileGif: "/avatar.gif",
@@ -114,9 +114,8 @@ export const EDUCATION = [
   {
     degree: "Applied Informatics in Economics",
     institution: "Russian‑Tajik Slavic University",
-    institutionLink: "https://example.com/",
+    institutionLink: "https://www.rtsu.tj/",
     period: "2021 - 2025",
-    score: "8.5 CGPA",
   },
 ];
 
