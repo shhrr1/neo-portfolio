@@ -1,13 +1,15 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Github } from "lucide-react";
 import { PROJECTS, BASE_URL, ABOUT_ME } from "@/app/constants/data";
 import { generateSlug } from "@/lib/utils";
 import BackButton from "./back-button";
 import ThemeToggle from "@/components/ui/theme-toggle";
+import LanguageToggle from "@/components/ui/language-toggle";
 import SectionSeparator from "@/components/ui/section-separator";
+import { LocalizedText } from "@/components/providers/language-provider";
+import LocalizedImage from "@/components/ui/localized-image";
 
 // =============================================
 // METADATA GENERATION (Server-side) - THIS WORKS!
@@ -90,6 +92,19 @@ interface Project {
   challenges?: Challenge[];
   metrics?: ProjectMetrics;
   video?: string;
+  translations?: {
+    ru?: {
+      name?: string;
+      description?: string;
+      images?: {
+        gallery?: ProjectImage[];
+      };
+      features?: string[];
+      technicalDetails?: TechnicalDetail[];
+      challenges?: Challenge[];
+      metrics?: ProjectMetrics;
+    };
+  };
 }
 
 interface ProjectPageProps {
@@ -118,17 +133,27 @@ export function generateStaticParams() {
 // COMPONENTS
 // =============================================
 const ProjectHeader = ({ project }: { project: Project }) => {
+  const russianProject = project.translations?.ru;
+
   return (
     <div className="divide-y divide-dashed divide-border">
       {/* Back Button & Title Area */}
       <div className="py-2 px-4 flex items-center justify-between">
         <BackButton />
-        <ThemeToggle />
+        <div className="flex items-center gap-2">
+          <LanguageToggle />
+          <ThemeToggle />
+        </div>
       </div>
 
       {/* Links & Tech Area */}
       <div className="px-4 py-4 space-y-4">
-        <h1 className="text-4xl font-bold">{project.name}</h1>
+        <h1 className="text-4xl font-bold">
+          <LocalizedText
+            en={project.name}
+            ru={russianProject?.name ?? project.name}
+          />
+        </h1>
 
         <div className="flex gap-3">
           {project.link && (
@@ -139,7 +164,7 @@ const ProjectHeader = ({ project }: { project: Project }) => {
               className=" btn px-4 py-2 flex items-center gap-2"
             >
               <ExternalLink className="w-4 h-4" />
-              Live Demo
+              <LocalizedText en="Live Demo" ru="Открыть проект" />
             </Link>
           )}
 
@@ -150,7 +175,7 @@ const ProjectHeader = ({ project }: { project: Project }) => {
             className=" btn px-4 py-2 flex items-center gap-2"
           >
             <Github className="w-4 h-4" />
-            Source Code
+            <LocalizedText en="Source Code" ru="Исходный код" />
           </Link>
         </div>
 
@@ -170,15 +195,19 @@ const ProjectHeader = ({ project }: { project: Project }) => {
   );
 };
 
-const ProjectContent = ({ project }: { project: Project }) => (
-  <div className="divide-y divide-dashed divide-border">
+const ProjectContent = ({ project }: { project: Project }) => {
+  const russianProject = project.translations?.ru;
+
+  return (
+    <div className="divide-y divide-dashed divide-border">
     {/* Hero Image */}
     {project.images?.hero && (
       <div className="p-2">
         <div className="relative aspect-video overflow-hidden">
-          <Image
+          <LocalizedImage
             src={project.images.hero}
             alt={`${project.name} preview`}
+            altRu={`${russianProject?.name ?? project.name}: предпросмотр`}
             fill
             className="object-cover rounded-lg"
             priority
@@ -190,10 +219,15 @@ const ProjectContent = ({ project }: { project: Project }) => (
     {/* Overview */}
     <section className="divide-y divide-dashed divide-border">
       <div className="py-2 px-4">
-        <h2 className="text-2xl font-semibold">overview.</h2>
+        <h2 className="text-2xl font-semibold">
+          <LocalizedText en="overview." ru="обзор." />
+        </h2>
       </div>
       <p className="p-4 text-muted-foreground text-justify leading-relaxed">
-        {project.description}
+        <LocalizedText
+          en={project.description}
+          ru={russianProject?.description ?? project.description}
+        />
       </p>
     </section>
 
@@ -201,14 +235,33 @@ const ProjectContent = ({ project }: { project: Project }) => (
     {project.technicalDetails && (
       <section className="divide-y divide-dashed divide-border">
         <div className="py-2 px-4">
-          <h2 className="text-2xl font-semibold">technical implementation.</h2>
+          <h2 className="text-2xl font-semibold">
+            <LocalizedText
+              en="technical implementation."
+              ru="техническая реализация."
+            />
+          </h2>
         </div>
         {project.technicalDetails.map(
           (detail: TechnicalDetail, index: number) => (
             <div key={index} className="p-4">
-              <h3 className="font-medium">{detail.title}</h3>
+              <h3 className="font-medium">
+                <LocalizedText
+                  en={detail.title}
+                  ru={
+                    russianProject?.technicalDetails?.[index]?.title ??
+                    detail.title
+                  }
+                />
+              </h3>
               <p className="text-sm text-muted-foreground text-justify leading-relaxed">
-                {detail.description}
+                <LocalizedText
+                  en={detail.description}
+                  ru={
+                    russianProject?.technicalDetails?.[index]?.description ??
+                    detail.description
+                  }
+                />
               </p>
               {detail.code && (
                 <pre className="bg-muted p-4 border border-dashed border-border text-sm overflow-x-auto">
@@ -225,13 +278,15 @@ const ProjectContent = ({ project }: { project: Project }) => (
     {project.video && (
       <section className="divide-y divide-dashed divide-border">
         <div className="py-2 px-4">
-          <h2 className="text-2xl font-semibold">project demo.</h2>
+          <h2 className="text-2xl font-semibold">
+            <LocalizedText en="project demo." ru="демо проекта." />
+          </h2>
         </div>
         <div className="p-2">
           <div className="relative aspect-video w-full overflow-hidden rounded-lg">
             <iframe
               src={`${project.video.replace("watch?v=", "embed/")}?rel=0&modestbranding=1&iv_load_policy=3&color=white&disablekb=1`}
-              title={`${project.name} Demo Video`}
+              title={`${project.name} demo video`}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               className="w-full h-full"
@@ -245,14 +300,19 @@ const ProjectContent = ({ project }: { project: Project }) => (
     {project.features && (
       <section className="divide-y divide-dashed divide-border">
         <div className="py-2 px-4">
-          <h2 className="text-2xl font-semibold">key features.</h2>
+          <h2 className="text-2xl font-semibold">
+            <LocalizedText en="key features." ru="основные возможности." />
+          </h2>
         </div>
         <ul className="p-4 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
           {project.features?.map((feature: string, index: number) => (
             <li key={index} className="flex items-start gap-2">
               <span className="w-1.5 h-1.5 bg-foreground/20 mt-2 flex-shrink-0"></span>
               <span className="text-sm text-muted-foreground leading-relaxed">
-                {feature}
+                <LocalizedText
+                  en={feature}
+                  ru={russianProject?.features?.[index] ?? feature}
+                />
               </span>
             </li>
           ))}
@@ -264,7 +324,9 @@ const ProjectContent = ({ project }: { project: Project }) => (
     {project.images?.gallery && (
       <section className="divide-y divide-dashed divide-border">
         <div className="py-2 px-4">
-          <h2 className="text-2xl font-semibold">screenshots.</h2>
+          <h2 className="text-2xl font-semibold">
+            <LocalizedText en="screenshots." ru="скриншоты." />
+          </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2">
           {project.images.gallery.map((image: ProjectImage, index: number) => (
@@ -273,16 +335,25 @@ const ProjectContent = ({ project }: { project: Project }) => (
               className="relative group p-2 border-dashed border-border border-b md:odd:border-r last:border-b-0 md:[&:nth-last-child(-n+2)]:border-b-0"
             >
               <div className="relative aspect-video overflow-hidden">
-                <Image
+                <LocalizedImage
                   src={image.src}
                   alt={image.alt}
+                  altRu={
+                    russianProject?.images?.gallery?.[index]?.alt ?? image.alt
+                  }
                   fill
                   className="object-cover rounded-lg"
                 />
                 {image.caption && (
                   <div className="absolute bottom-0 left-0 right-0 bg-black/60 p-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <p className="text-xs text-white text-center">
-                      {image.caption}
+                      <LocalizedText
+                        en={image.caption}
+                        ru={
+                          russianProject?.images?.gallery?.[index]?.caption ??
+                          image.caption
+                        }
+                      />
                     </p>
                   </div>
                 )}
@@ -297,15 +368,34 @@ const ProjectContent = ({ project }: { project: Project }) => (
     {project.challenges && (
       <section className="divide-y divide-dashed divide-border">
         <div className="py-2 px-4">
-          <h2 className="text-2xl font-semibold">challenges & solutions.</h2>
+          <h2 className="text-2xl font-semibold">
+            <LocalizedText
+              en="challenges & solutions."
+              ru="сложности и решения."
+            />
+          </h2>
         </div>
         {project.challenges.map((challenge: Challenge, index: number) => (
           <div key={index} className="p-4">
             <h3 className="font-medium text-sm">
-              Challenge: {challenge.problem}
+              <LocalizedText en="Challenge:" ru="Задача:" />{" "}
+              <LocalizedText
+                en={challenge.problem}
+                ru={
+                  russianProject?.challenges?.[index]?.problem ??
+                  challenge.problem
+                }
+              />
             </h3>
             <p className="text-sm text-muted-foreground text-justify leading-relaxed">
-              Solution: {challenge.solution}
+              <LocalizedText en="Solution:" ru="Решение:" />{" "}
+              <LocalizedText
+                en={challenge.solution}
+                ru={
+                  russianProject?.challenges?.[index]?.solution ??
+                  challenge.solution
+                }
+              />
             </p>
           </div>
         ))}
@@ -316,32 +406,53 @@ const ProjectContent = ({ project }: { project: Project }) => (
     {project.metrics && (
       <section className="divide-y divide-dashed divide-border">
         <div className="py-2 px-4">
-          <h2 className="text-2xl font-semibold">project impact.</h2>
+          <h2 className="text-2xl font-semibold">
+            <LocalizedText en="project impact." ru="результаты проекта." />
+          </h2>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4">
           {Object.entries(project.metrics)
             .filter(([, value]) => value !== undefined)
-            .map(([key, value], index, array) => (
-              <div
-                key={key}
-                className={`text-center p-4 border-dashed border-border border-r border-b 
+            .map(([key, value], index, array) => {
+              const russianValue = russianProject?.metrics?.[key] ?? value;
+              return (
+                <div
+                  key={key}
+                  className={`text-center p-4 border-dashed border-border border-r border-b 
                   ${(index + 1) % 2 === 0 ? "border-r-0 md:border-r" : ""}
                   ${(index + 1) % 4 === 0 ? "md:border-r-0" : ""}
                   ${index >= array.length - 2 ? "border-b-0 md:border-b" : ""}
                   ${index >= array.length - 4 ? "md:border-b-0" : ""}
                 `}
-              >
-                <div className="text-2xl font-bold">{value}</div>
-                <div className="text-xs text-muted-foreground capitalize">
-                  {key.replace(/([A-Z])/g, " $1").trim()}
+                >
+                  <div className="text-2xl font-bold">
+                    <LocalizedText en={value ?? ""} ru={russianValue ?? ""} />
+                  </div>
+                  <div className="text-xs text-muted-foreground capitalize">
+                    <LocalizedText
+                      en={key.replace(/([A-Z])/g, " $1").trim()}
+                      ru={
+                        key === "users"
+                          ? "пользователи"
+                          : key === "uptime"
+                            ? "доступность"
+                            : key === "loadTime"
+                              ? "время загрузки"
+                              : key === "stars"
+                                ? "звёзды"
+                                : key.replace(/([A-Z])/g, " $1").trim()
+                      }
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
         </div>
       </section>
     )}
-  </div>
-);
+    </div>
+  );
+};
 
 // =============================================
 // MAIN COMPONENT (Server Component)

@@ -2,16 +2,20 @@
 import Link from "next/link";
 import ThemeToggle from "../ui/theme-toggle";
 import { ABOUT_ME } from "@/app/constants/data";
+import LanguageToggle from "@/components/ui/language-toggle";
+import { useTranslations } from "@/components/providers/language-provider";
 
 const STAGGER = 30;
 
 const navItems = [
-  { name: "skills", href: "#skills" },
-  { name: "projects", href: "#projects" },
-  { name: "contact", href: "#contact" },
-];
+  { key: "skills", href: "#skills" },
+  { key: "projects", href: "#projects" },
+  { key: "contact", href: "#contact" },
+] as const;
 
 export default function Navbar() {
+  const copy = useTranslations();
+
   const handleScrollToSection = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string
@@ -31,13 +35,13 @@ export default function Navbar() {
         <div className="hidden md:flex items-center justify-end flex-1 gap-6">
           {navItems.map((item) => (
             <Link
-              key={item.name}
+              key={item.key}
               href={item.href}
               onClick={(e) => handleScrollToSection(e, item.href)}
               className="relative text-base text-foreground/80 cursor-pointer group"
             >
               <span className="inline-flex">
-                {item.name.split("").map((letter, i) => (
+                {copy.navigation[item.key].split("").map((letter, i) => (
                   <span
                     key={i}
                     className="relative inline-block overflow-hidden"
@@ -64,7 +68,8 @@ export default function Navbar() {
           ))}
         </div>
 
-        <div className="ml-6">
+        <div className="ml-4 flex items-center gap-2">
+          <LanguageToggle />
           <ThemeToggle />
         </div>
       </div>

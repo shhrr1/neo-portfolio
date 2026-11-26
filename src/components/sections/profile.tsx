@@ -6,29 +6,36 @@ import { FaLocationCrosshairs } from "react-icons/fa6";
 import Image from "next/image";
 
 import { ABOUT_ME } from "@/app/constants/data";
+import {
+  useLanguage,
+  useTranslations,
+} from "@/components/providers/language-provider";
 
 // =============================================
 // CUSTOM HOOKS
 // =============================================
-const useISTTime = () => {
+const useISTTime = (language: "en" | "ru") => {
   const [currentTime, setCurrentTime] = useState("");
 
-useEffect(() => {
-  const updateTime = () => {
-    const timeString = new Date().toLocaleTimeString("ru-RU", {
-      timeZone: "Asia/Dushanbe",
-      hour12: false,
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    });
-    setCurrentTime(timeString);
-  };
+  useEffect(() => {
+    const updateTime = () => {
+      const timeString = new Date().toLocaleTimeString(
+        language === "ru" ? "ru-RU" : "en-US",
+        {
+          timeZone: "Asia/Dushanbe",
+          hour12: false,
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        }
+      );
+      setCurrentTime(timeString);
+    };
 
-  updateTime();
-  const interval = setInterval(updateTime, 1000);
-  return () => clearInterval(interval);
-}, []);
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, [language]);
 
   return currentTime;
 };
@@ -37,7 +44,9 @@ useEffect(() => {
 // MAIN COMPONENT
 // =============================================
 const Profile = () => {
-  const currentTime = useISTTime();
+  const { language } = useLanguage();
+  const copy = useTranslations();
+  const currentTime = useISTTime(language);
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
 
@@ -59,7 +68,7 @@ const Profile = () => {
             {isHovering ? (
               <Image
                 src={ABOUT_ME.profileGif}
-                alt="Profile GIF"
+                alt={copy.profile.gifAlt}
                 width={96}
                 height={96}
                 className="w-full h-full object-cover"
@@ -90,14 +99,16 @@ const Profile = () => {
               <MdVerified className="w-5 h-5 cursor-pointer" />
               {showTooltip && (
                 <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-background text-foreground border border-border text-sm px-2 py-1 rounded-lg whitespace-nowrap z-10 shadow-lg">
-                  npm verified: human@latest
+                  {copy.profile.verified}
                   <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-border"></div>
                 </div>
               )}
             </div>
           </div>
           <p className="text-base text-muted-foreground font-medium">
-            {ABOUT_ME.title}
+            {language === "ru"
+              ? ABOUT_ME.translations.ru.title
+              : ABOUT_ME.title}
           </p>
         </div>
 
@@ -105,7 +116,11 @@ const Profile = () => {
         <div className="hidden md:block text-base text-muted-foreground space-y-1 text-right">
           <div className="flex items-center gap-2 justify-end">
             <FaLocationCrosshairs className="w-4 h-4" />
-            <span className="font-mono">{ABOUT_ME.location}</span>
+            <span className="font-mono">
+              {language === "ru"
+                ? ABOUT_ME.translations.ru.location
+                : ABOUT_ME.location}
+            </span>
           </div>
           <div className="font-mono">{currentTime} TJK</div>
         </div>

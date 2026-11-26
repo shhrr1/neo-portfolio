@@ -1,10 +1,11 @@
 import { SKILLS } from "@/app/constants/data";
+import { LocalizedText } from "@/components/providers/language-provider";
 
 const Skills = () => (
   <section id="skills">
     <div className="flex items-center py-2 px-4 border-b border-dashed border-border">
       <h2 className="text-2xl font-semibold flex items-center">
-        technical skills.
+        <LocalizedText en="technical skills." ru="технические навыки." />
       </h2>
     </div>
     <div className="relative p-4">

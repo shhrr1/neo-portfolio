@@ -4,8 +4,11 @@ import { getCalApi } from "@calcom/embed-react";
 import { useEffect } from "react";
 import { USER_NAMES } from "@/app/constants/data";
 import { SiGooglemeet } from "react-icons/si";
+import { useTranslations } from "@/components/providers/language-provider";
 
 export default function Meeting() {
+  const copy = useTranslations();
+
   useEffect(() => {
     (async function () {
       const cal = await getCalApi();
@@ -33,7 +36,7 @@ export default function Meeting() {
       className="btn w-full px-3 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 cursor-pointer"
     >
       <SiGooglemeet className="w-4 h-4" />
-      Schedule a Meeting
+      {copy.buttons.scheduleMeeting}
     </button>
   );
 }

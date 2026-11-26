@@ -2,8 +2,10 @@
 import { useState, useRef } from "react";
 import { FaArrowUp } from "react-icons/fa";
 import { useLenis } from "lenis/react";
+import { useTranslations } from "@/components/providers/language-provider";
 
 export default function ScrollToTop() {
+  const copy = useTranslations();
   const [isVisible, setIsVisible] = useState(false);
   const circleRef = useRef<SVGCircleElement>(null);
 
@@ -35,7 +37,7 @@ export default function ScrollToTop() {
       <button
         onClick={scrollToTop}
         className="relative w-8 h-8 cursor-pointer bg-background text-foreground border border-border rounded-full shadow-md transition-[background-color,box-shadow,transform] duration-300 hover:shadow-lg hover:scale-110 group flex items-center justify-center"
-        aria-label="Scroll to top"
+        aria-label={copy.buttons.scrollToTop}
       >
         {/* Progress Circle Container */}
         <div className="absolute inset-0 flex items-center justify-center">

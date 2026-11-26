@@ -14,6 +14,11 @@ import { SiPeerlist } from "react-icons/si";
 import { useState, ChangeEvent, FormEvent, ComponentType } from "react";
 import Meeting from "../ui/cal-meeting";
 import { SOCIAL_LINKS, CONTACT_FORM_ENDPOINT } from "@/app/constants/data";
+import {
+  useLanguage,
+  useTranslations,
+} from "@/components/providers/language-provider";
+import { translations, type Language } from "@/app/constants/translations";
 
 // =============================================
 // TYPE DEFINITIONS
@@ -27,9 +32,9 @@ interface FormData {
 interface FormField {
   name: keyof FormData;
   type: string;
-  label: string;
+  label: { en: string; ru: string };
   icon: ComponentType<{ className?: string }>;
-  placeholder: string;
+  placeholder: { en: string; ru: string };
   rows?: number;
 }
 
@@ -47,23 +52,29 @@ const FORM_CONFIG = {
     {
       name: "name",
       type: "text",
-      label: "Name",
+      label: { en: "Name", ru: "Имя" },
       icon: User,
-      placeholder: "Your name",
+      placeholder: { en: "Your name", ru: "Ваше имя" },
     },
     {
       name: "email",
       type: "email",
-      label: "Email",
+      label: { en: "Email", ru: "Эл. почта" },
       icon: Mail,
-      placeholder: "your.email@example.com",
+      placeholder: {
+        en: "your.email@example.com",
+        ru: "your.email@example.com",
+      },
     },
     {
       name: "message",
       type: "textarea",
-      label: "Message",
+      label: { en: "Message", ru: "Сообщение" },
       icon: FaRegCommentDots,
-      placeholder: "What would you like to discuss?",
+      placeholder: {
+        en: "What would you like to discuss?",
+        ru: "О чём хотите поговорить?",
+      },
       rows: 5,
     },
   ] as FormField[],
@@ -76,7 +87,8 @@ const submitForm = async (
   formData: FormData,
   setStatus: SetStateFunction<FormStatus>,
   setErrorMessage: SetStateFunction<string>,
-  setFormData: SetStateFunction<FormData>
+  setFormData: SetStateFunction<FormData>,
+  language: Language
 ) => {
   setStatus("submitting");
   setErrorMessage("");
@@ -94,12 +106,12 @@ const submitForm = async (
     } else {
       const errorData = await response.json();
       setErrorMessage(
-        errorData.error || "Something went wrong. Please try again."
+        errorData.error || translations[language].contact.submitError
       );
       setStatus("error");
     }
   } catch {
-    setErrorMessage("An unexpected error occurred. Please try again.");
+    setErrorMessage(translations[language].contact.unexpectedError);
     setStatus("error");
   }
 };
@@ -107,7 +119,8 @@ const submitForm = async (
 const renderField = (
   field: FormField,
   formData: FormData,
-  handleChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  handleChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void,
+  language: Language
 ) => {
   const Icon = field.icon;
   const commonClasses =
@@ -128,8 +141,8 @@ const renderField = (
           value={formData[field.name]}
           onChange={handleChange}
           required
-          aria-label={field.label}
-          placeholder={field.placeholder}
+          aria-label={field.label[language]}
+          placeholder={field.placeholder[language]}
           rows={field.rows}
           className={`${commonClasses} resize-none`}
         />
@@ -141,8 +154,8 @@ const renderField = (
           value={formData[field.name]}
           onChange={handleChange}
           required
-          aria-label={field.label}
-          placeholder={field.placeholder}
+          aria-label={field.label[language]}
+          placeholder={field.placeholder[language]}
           className={commonClasses}
         />
       )}
@@ -154,6 +167,8 @@ const renderField = (
 // MAIN COMPONENT
 // =============================================
 const Contact = () => {
+  const { language } = useLanguage();
+  const copy = useTranslations();
   const [formData, setFormData] = useState<FormData>(FORM_CONFIG.initialData);
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -166,14 +181,14 @@ const Contact = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    submitForm(formData, setStatus, setErrorMessage, setFormData);
+    submitForm(formData, setStatus, setErrorMessage, setFormData, language);
   };
 
   return (
     <section id="contact">
       <div className="flex items-center py-2 px-4 border-b border-dashed border-border text-foreground">
         <h2 className="text-2xl font-semibold flex items-center">
-          let&apos;s connect.
+          {copy.sections.contact}
         </h2>
       </div>
 
@@ -182,16 +197,18 @@ const Contact = () => {
         <div className="lg:col-span-3">
           <div>
             <div className="p-4 border-b border-dashed border-border">
-              <h3 className="text-xl font-medium mb-1">send a message.</h3>
+              <h3 className="text-xl font-medium mb-1">
+                {copy.contact.sendHeading}
+              </h3>
               <p className="text-sm text-muted-foreground">
-                Drop a message below to discuss projects or just say hi.
+                {copy.contact.sendDescription}
               </p>
             </div>
 
             <form onSubmit={handleSubmit}>
               <div className="border-b border-dashed border-border divide-y divide-dashed divide-border">
                 {FORM_CONFIG.fields.map((field) =>
-                  renderField(field, formData, handleChange)
+                  renderField(field, formData, handleChange, language)
                 )}
               </div>
 
@@ -202,10 +219,10 @@ const Contact = () => {
                   className={`btn w-full px-3 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 cursor-pointer group ${status === "submitting" ? "opacity-70 cursor-not-allowed" : ""}`}
                 >
                   {status === "submitting" ? (
-                    "Sending..."
+                    copy.contact.sending
                   ) : (
                     <>
-                      <span>Send Message</span>
+                      <span>{copy.contact.send}</span>
                       <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                     </>
                   )}
@@ -213,7 +230,7 @@ const Contact = () => {
 
                 {status === "success" && (
                   <p className="text-green-600 text-sm text-center">
-                    Got your message! I&apos;ll get back to you soon.
+                    {copy.contact.sent}
                   </p>
                 )}
                 {status === "error" && (
@@ -231,18 +248,20 @@ const Contact = () => {
           {/* Meeting Scheduler */}
           <div className="flex flex-col items-start w-full">
             <div className="p-4 border-b border-dashed border-border w-full">
-              <h3 className="text-xl font-medium mb-1">schedule a meeting.</h3>
+              <h3 className="text-xl font-medium mb-1">
+                {copy.contact.meetingHeading}
+              </h3>
               <p className="text-sm text-muted-foreground">
-                Book a 30-minute call on Google Meet.
+                {copy.contact.meetingDescription}
               </p>
             </div>
 
             <div className="p-4 border-b border-dashed border-border w-full">
               <h4 className="text-lg font-medium mb-1">
-                30-minute discovery call.
+                {copy.contact.discoveryCall}
               </h4>
               <p className="text-sm text-muted-foreground">
-                Let&apos;s discuss your project goals.
+                {copy.contact.discoveryDescription}
               </p>
             </div>
             <div className="p-4 w-full">
@@ -253,9 +272,11 @@ const Contact = () => {
           {/* Social Media Links */}
           <div className="flex flex-col items-start w-full">
             <div className="p-4 border-b border-dashed border-border w-full">
-              <h3 className="text-xl font-medium mb-1">follow & connect.</h3>
+              <h3 className="text-xl font-medium mb-1">
+                {copy.contact.followHeading}
+              </h3>
               <p className="text-sm text-muted-foreground">
-                Stay updated with my latest thoughts.
+                {copy.contact.followDescription}
               </p>
             </div>
 

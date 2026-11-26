@@ -8,6 +8,7 @@ import ScrollToTop from "@/components/ui/scroll-to-top";
 import GridPattern from "@/components/ui/grid-pattern";
 import CustomCursor from "@/components/ui/custom-cursor";
 import WalkingMascot from "@/components/ui/walking-mascot";
+import { LanguageProvider } from "@/components/providers/language-provider";
 import {
   BASE_URL,
   SOCIAL_LINKS,
@@ -174,11 +175,13 @@ export default function RootLayout({
           enableSystem={true}
           disableTransitionOnChange
         >
-          <GridPattern />
-          <CustomCursor />
-          <ScrollToTop />
-          <WalkingMascot />
-          <SmoothScroll>{children}</SmoothScroll>
+          <LanguageProvider>
+            <GridPattern />
+            <CustomCursor />
+            <ScrollToTop />
+            <WalkingMascot />
+            <SmoothScroll>{children}</SmoothScroll>
+          </LanguageProvider>
         </ThemeProvider>
         <Analytics />
       </body>

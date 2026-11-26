@@ -3,9 +3,11 @@
 import { useTheme } from "next-themes";
 import { useEffect, useRef, useState } from "react";
 import { FiSun, FiMoon } from "react-icons/fi";
+import { useTranslations } from "@/components/providers/language-provider";
 
 export default function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
+  const copy = useTranslations();
   const [mounted, setMounted] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const nextTheme = resolvedTheme === "dark" ? "light" : "dark";
@@ -73,7 +75,7 @@ export default function ThemeToggle() {
       ref={buttonRef}
       className="p-2 text-sm badge cursor-pointer"
       onClick={() => animateTheme()}
-      aria-label="Toggle theme"
+      aria-label={copy.buttons.toggleTheme}
     >
       {resolvedTheme === "dark" ? <FiMoon size={16} /> : <FiSun size={16} />}
     </button>

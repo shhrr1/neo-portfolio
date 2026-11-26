@@ -1,19 +1,26 @@
 "use client";
 
 import Image from "next/image";
+import { useLanguage } from "@/components/providers/language-provider";
 
 // Swap these for your own project hero images (e.g. /projects/<name>/hero.webp).
 const IMAGES = [
-  { src: "/project-one.png", alt: "Project One" },
-  { src: "/placeholder-image.png", alt: "Project Two" },
-  { src: "/placeholder-image.png", alt: "Project Three" },
-  { src: "/placeholder-image.png", alt: "Project Four" },
-  { src: "/placeholder-image.png", alt: "Project Five" },
-  { src: "/project-one-analytic.png", alt: "project-one-analytic" },
-  { src: "/placeholder-image.png", alt: "Project Six" },
+  { src: "/project-one.png", alt: "Project One", altRu: "Проект 1" },
+  { src: "/placeholder-image.png", alt: "Project Two", altRu: "Проект 2" },
+  { src: "/placeholder-image.png", alt: "Project Three", altRu: "Проект 3" },
+  { src: "/placeholder-image.png", alt: "Project Four", altRu: "Проект 4" },
+  { src: "/placeholder-image.png", alt: "Project Five", altRu: "Проект 5" },
+  {
+    src: "/project-one-analytic.png",
+    alt: "Project One analytics",
+    altRu: "Аналитика проекта 1",
+  },
+  { src: "/placeholder-image.png", alt: "Project Six", altRu: "Проект 6" },
 ];
 
 export default function ImageMarquee() {
+  const { language } = useLanguage();
+
   return (
     <>
       <style jsx global>{`
@@ -39,7 +46,7 @@ export default function ImageMarquee() {
             >
               <Image
                 src={img.src}
-                alt={img.alt}
+                alt={language === "ru" ? img.altRu : img.alt}
                 width={200}
                 height={128}
                 className="rounded-lg w-[200px] h-32 object-cover"
